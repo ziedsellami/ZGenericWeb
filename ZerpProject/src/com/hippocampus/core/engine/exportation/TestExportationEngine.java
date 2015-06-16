@@ -14,7 +14,7 @@ public class TestExportationEngine {
 		if(component.get_type().equalsIgnoreCase(Statics.Ztext)){
 			component = (ZText)component;
 		}
-		System.out.println("component type= "+component.isFormVisibility());
+		System.out.println("component type Ztext= "+component.isFormVisibility());
 
 	}
 
