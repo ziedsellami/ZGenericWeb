@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 16 Juin 2015 à 14:44
+-- Généré le :  Mar 16 Juin 2015 à 16:27
 -- Version du serveur :  5.6.21
 -- Version de PHP :  5.6.3
 
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `simple_component` (
   `simpl_comp_treevisibility` int(1) NOT NULL,
   `simpl_comp_type` varchar(15) NOT NULL,
   `simpl_comp_status` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `simple_component`
@@ -104,7 +104,32 @@ INSERT INTO `simple_component` (`id_simple_component`, `simpl_comp_name`, `simpl
 (7, 'ee', '', '', 10, 1, 1, 'text', 1),
 (8, 'ee', '', '', 10, 1, 1, 'text', 1),
 (9, 'ee', '', '', 10, 1, 1, 'text', 1),
-(10, 'ee', '', '', 10, 1, 1, 'text', 1);
+(10, 'ee', '', '', 10, 1, 1, 'text', 1),
+(11, 'ee', '', '', 10, 1, 1, 'text', 1),
+(12, 'ee', '', '', 10, 1, 1, 'text', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+`id` int(11) NOT NULL,
+  `login_user` varchar(50) NOT NULL,
+  `pwd_user` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user_project`
+--
+
+CREATE TABLE IF NOT EXISTS `user_project` (
+  `id_user` int(11) NOT NULL,
+  `id_project` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -178,6 +203,18 @@ ALTER TABLE `simple_component`
  ADD PRIMARY KEY (`id_simple_component`), ADD KEY `id_simple_component` (`id_simple_component`);
 
 --
+-- Index pour la table `user`
+--
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `user_project`
+--
+ALTER TABLE `user_project`
+ ADD PRIMARY KEY (`id_user`,`id_project`);
+
+--
 -- Index pour la table `value_composed_component`
 --
 ALTER TABLE `value_composed_component`
@@ -223,7 +260,12 @@ MODIFY `relation_container_object` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT pour la table `simple_component`
 --
 ALTER TABLE `simple_component`
-MODIFY `id_simple_component` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `id_simple_component` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT pour la table `user`
+--
+ALTER TABLE `user`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `value_composed_component`
 --
