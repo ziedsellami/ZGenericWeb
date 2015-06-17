@@ -1,6 +1,7 @@
 package com.hippocampus.java.web.servlets;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,6 +27,7 @@ public class Login extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+    
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,8 +42,9 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session;
-		session = request.getSession();
-
+		session = request.getSession(true);
+		//session.setAttribute("user", "NotOk");
+	//getServletContext().getRequestDispatcher(request.getContextPath()+"/login.jsp").forward(request,response);
 		ZSgbdConnexion connexion = ZSgbdConnexion.getInstance();
 		
 		////must login and pwd true + user has a project (3 conditions)
@@ -51,18 +54,22 @@ public class Login extends HttpServlet {
 		RequestDispatcher rd= null;
 		if(verif==true)
 		{	
-			rd = getServletContext().getRequestDispatcher("/IndexDashboard.jsp");
+			//rd = getServletContext().getRequestDispatcher("/IndexDashboard.jsp");
 			session.setAttribute("user", "Ok");
 			session.setAttribute("login",request.getParameter("login"));
-			rd.forward(request, response);
-			System.out.println("Authenrification Succes");
+			
+			Date d = new Date();
+			System.out.println("Authenrification Succes for user login ="+request.getParameter("login")+" at :"+d);
+			getServletContext().getRequestDispatcher(request.getContextPath()+"/IndexDashboard.jsp").forward(request,response);
+			//rd.forward(request, response);
 		}
 		else
 		{
 			rd = getServletContext().getRequestDispatcher("/login.jsp");
 			session.setAttribute("user", "NotOk");
+			Date d = new Date();
+			System.out.println("Authenrification Failure for user login ="+request.getParameter("login")+" at :"+d);
 			rd.forward(request, response);
-			System.out.println("Authenrification Failure");
 		}
 	}
 

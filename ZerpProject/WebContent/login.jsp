@@ -1,7 +1,11 @@
 <!DOCTYPE html>
  <html lang="en"> 
 <!-- BEGIN HEAD -->
-
+<%//session.setAttribute("user", "NotOk");
+session.removeAttribute("user");
+if (session !=null)
+session.invalidate();
+System.out.print("Session Destroy"); %>
 
 <head>
   <meta charset="utf-8" />
