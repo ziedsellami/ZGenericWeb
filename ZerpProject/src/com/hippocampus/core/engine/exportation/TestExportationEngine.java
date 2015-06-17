@@ -8,13 +8,15 @@ import com.hippocampus.zformcomponent.ZText;
 public class TestExportationEngine { 
 
 	public static void main(String[] args) {
-		ZSgbdConnexion connexion =ZSgbdConnexion.getInstance();
+		/*ZSgbdConnexion connexion =ZSgbdConnexion.getInstance();
 		ZFormComponent component=  connexion.getZcomponent(7);
 		//System.out.println(component.get_type());
 		if(component.get_type().equalsIgnoreCase(Statics.Ztext)){
 			component = (ZText)component;
 		}
-		System.out.println("component type Ztext= "+component.isFormVisibility());
+		System.out.println("component type Ztext= "+component.isFormVisibility());*/
+		ZSgbdConnexion connexion =ZSgbdConnexion.getInstance();
+		System.out.println(connexion.verifAuthentification("bob", "bob"));
 
 	}
 

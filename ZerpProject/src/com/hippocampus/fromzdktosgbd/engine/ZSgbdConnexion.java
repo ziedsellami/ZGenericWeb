@@ -85,7 +85,7 @@ public class ZSgbdConnexion {
 	}
 
 	public ZFormComponent getZcomponent(int id) {
-		ZFormComponent component=null;
+		ZFormComponent component = null;
 		try {
 			Class.forName(driver);
 			java.sql.Connection con = DriverManager
@@ -94,46 +94,54 @@ public class ZSgbdConnexion {
 					.prepareStatement("select * from simple_component where id_simple_component='"
 							+ id + "' ");
 			ResultSet rs = statement.executeQuery();
-	
-			
+
 			String simpl_comp_name = "";
 			String simpl_comp_value = "";
-			String	simpl_comp_placeholder = "";
-			int	simpl_comp_size = 0;
-			int	simpl_comp_formvisibility =0;
-			int	simpl_comp_treevisibility = 0;
+			String simpl_comp_placeholder = "";
+			int simpl_comp_size = 0;
+			int simpl_comp_formvisibility = 0;
+			int simpl_comp_treevisibility = 0;
 			String simpl_comp_type = "";
-			int	simpl_comp_status = 0;
-			
+			int simpl_comp_status = 0;
+
 			// (`id_simple_component`,
-					// `simpl_comp_name`, `simpl_comp_value`, `simpl_comp_placeholder`,
-					// `simpl_comp_size`, `simpl_comp_formvisibility`,
-					// `simpl_comp_treevisibility`, `simpl_comp_type`,
-					// `simpl_comp_status`)
-			
-			while (rs.next()){
+			// `simpl_comp_name`, `simpl_comp_value`, `simpl_comp_placeholder`,
+			// `simpl_comp_size`, `simpl_comp_formvisibility`,
+			// `simpl_comp_treevisibility`, `simpl_comp_type`,
+			// `simpl_comp_status`)
+
+			while (rs.next()) {
 				simpl_comp_name = rs.getString("simpl_comp_name");
 				simpl_comp_value = rs.getString("simpl_comp_value");
 				simpl_comp_placeholder = rs.getString("simpl_comp_placeholder");
 				simpl_comp_size = rs.getInt("simpl_comp_size");
-				simpl_comp_formvisibility =rs.getInt("simpl_comp_formvisibility");
-				simpl_comp_treevisibility = rs.getInt("simpl_comp_treevisibility");
+				simpl_comp_formvisibility = rs
+						.getInt("simpl_comp_formvisibility");
+				simpl_comp_treevisibility = rs
+						.getInt("simpl_comp_treevisibility");
 				simpl_comp_type = rs.getString("simpl_comp_type");
-				simpl_comp_status =  rs.getInt("simpl_comp_status");
+				simpl_comp_status = rs.getInt("simpl_comp_status");
 			}
-			if (simpl_comp_type.equalsIgnoreCase(Statics.Ztext)){// test type of component and return it
-				boolean tree=false;
-				if(simpl_comp_treevisibility==1){
-					tree=true;
+			if (simpl_comp_type.equalsIgnoreCase(Statics.Ztext)) {// test type
+																	// of
+																	// component
+																	// and
+																	// return it
+				boolean tree = false;
+				if (simpl_comp_treevisibility == 1) {
+					tree = true;
 				}
-				boolean form=false;
-				if(simpl_comp_formvisibility==1){
-					form=true;
+				boolean form = false;
+				if (simpl_comp_formvisibility == 1) {
+					form = true;
 				}
-				component = new ZText(simpl_comp_name, simpl_comp_value, simpl_comp_placeholder, simpl_comp_size, form	, tree);
+				component = new ZText(simpl_comp_name, simpl_comp_value,
+						simpl_comp_placeholder, simpl_comp_size, form, tree);
+				rs.close();
+				statement.close();
 			}
-		
-			//System.out.println("simpl_comp_type" + simpl_comp_type);
+
+			// System.out.println("simpl_comp_type" + simpl_comp_type);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,9 +149,49 @@ public class ZSgbdConnexion {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
 
 		return component;
+	}
+
+	public boolean verifAuthentification(String login, String pwdd) {
+		// ZFormComponent component=null;
+		boolean verif = false;
+		try {
+			Class.forName(driver);
+			java.sql.Connection con = DriverManager
+					.getConnection(db, root, pwd);
+			PreparedStatement statement = (PreparedStatement) con
+					.prepareStatement("SELECT * FROM `user` ,`user_project` where user.login_user='"
+							+ login
+							+ "' and user.pwd_user='"
+							+ pwdd
+							+ "' and user.id_user=user_project.id_user");
+			// .prepareStatement("SELECT * FROM `user` ,`user_project` where user.login_user='zied' and user.pwd_user='zied' and user.id_user=user_project.id_user");
+
+			ResultSet rs = statement.executeQuery();
+			int taille=0;
+			while (rs.next()) {
+				taille++;
+			}
+			//System.out.println(rs.get());
+			if (taille >= 1) {
+				//System.out.println(rs.getRow());
+				verif = true;
+
+			}
+
+			statement.close();
+			rs.close();
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return verif;
 	}
 
 }
